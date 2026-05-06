@@ -282,6 +282,31 @@ html {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
+/* ─── Payment Carousel ─────────────────────────── */
+@keyframes scroll-carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.payment-carousel-track {
+  animation: scroll-carousel 25s linear infinite;
+  width: max-content;
+}
+
+.payment-carousel-track:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 640px) {
+  .payment-carousel-track {
+    animation-duration: 18s;
+  }
+}
+
 /* ─── Google Translate Widget (Hidden — controlled via custom UI) ── */
 #google_translate_hidden {
   position: absolute !important;
