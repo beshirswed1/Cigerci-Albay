@@ -84,7 +84,7 @@ export default function AdminDashboardLayout({
             <ChefHat className="w-5 h-5" />
           </div>
           <div>
-            <div className="font-serif font-bold text-foreground text-sm">
+            <div className="font-bold text-foreground text-sm">
               {RESTAURANT.name}
             </div>
             <div className="text-xs text-muted-foreground">Yönetim</div>
@@ -130,7 +130,7 @@ export default function AdminDashboardLayout({
           >
             <Menu className="w-5 h-5" />
           </button>
-          <span className="font-serif font-bold text-foreground text-sm">{RESTAURANT.name} Yönetim</span>
+          <span className="font-bold text-foreground text-sm">{RESTAURANT.name} Yönetim</span>
           <button
             onClick={handleLogout}
             className="p-2 rounded-xl text-foreground/60 hover:text-destructive transition-all"
@@ -153,7 +153,7 @@ export default function AdminDashboardLayout({
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                   <ChefHat className="w-5 h-5" />
                 </div>
-                <div className="font-serif font-bold text-foreground text-sm">
+                <div className="font-bold text-foreground text-sm">
                   {RESTAURANT.name}
                 </div>
               </div>

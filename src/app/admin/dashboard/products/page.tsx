@@ -9,7 +9,6 @@ import {
   deleteMenuItem,
 } from "@/lib/firestore";
 import type { MenuItem, Category } from "@/lib/firestore";
-import Image from "next/image";
 import { toast } from "sonner";
 import {
   Package,
@@ -133,7 +132,7 @@ export default function ProductsPage() {
         <div>
           <div className="flex items-center gap-3 mb-2">
             <Package className="w-6 h-6 text-primary" />
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
               Ürünler
             </h1>
           </div>
@@ -169,7 +168,7 @@ export default function ProductsPage() {
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="Ör: katmer"
+                placeholder="Ürün Adı"
                 className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 text-foreground text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
               />
             </div>
@@ -236,11 +235,10 @@ export default function ProductsPage() {
           {/* Image Preview */}
           {form.imageUrl && (
             <div className="relative w-32 h-24 rounded-xl overflow-hidden border border-border/50">
-              <Image
+              <img
                 src={form.imageUrl}
                 alt="Önizleme"
-                fill
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
           )}
@@ -284,18 +282,17 @@ export default function ProductsPage() {
             <div
               key={item.id}
               className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-2xl border transition-all group ${item.isVisible
-                  ? "bg-card/50 border-border/50 hover:border-border"
-                  : "bg-card/20 border-border/30 opacity-60"
+                ? "bg-card/50 border-border/50 hover:border-border"
+                : "bg-card/20 border-border/30 opacity-60"
                 }`}
             >
               {/* Image */}
               <div className="relative w-full sm:w-20 h-32 sm:h-16 rounded-xl overflow-hidden flex-shrink-0 bg-secondary/30">
                 {item.imageUrl ? (
-                  <Image
+                  <img
                     src={item.imageUrl}
                     alt={item.name}
-                    fill
-                    className="object-cover"
+                    className="object-cover w-full h-full"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
@@ -327,8 +324,8 @@ export default function ProductsPage() {
                 <button
                   onClick={() => handleToggleVisibility(item)}
                   className={`p-2 rounded-lg transition-all ${item.isVisible
-                      ? "text-muted-foreground hover:text-amber-400 hover:bg-amber-400/5"
-                      : "text-muted-foreground hover:text-emerald-400 hover:bg-emerald-400/5"
+                    ? "text-muted-foreground hover:text-amber-400 hover:bg-amber-400/5"
+                    : "text-muted-foreground hover:text-emerald-400 hover:bg-emerald-400/5"
                     }`}
                   title={item.isVisible ? "Gizle" : "Göster"}
                 >

@@ -29,7 +29,7 @@ export default function AboutSection() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             {RESTAURANT.about.subtitle}
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
             {RESTAURANT.about.title}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
@@ -52,7 +52,7 @@ export default function AboutSection() {
             <div className="absolute -bottom-4 -right-4 w-full h-full rounded-3xl border-2 border-primary/20 -z-10" />
             {/* Experience badge */}
             <div className="absolute -bottom-6 -left-2 sm:left-6 glass-strong rounded-2xl px-6 py-4 shadow-2xl">
-              <div className="text-3xl font-bold font-serif gradient-text">
+              <div className="text-3xl font-bold gradient-text">
                 {new Date().getFullYear() - RESTAURANT.foundedYear}+
               </div>
               <div className="text-sm text-muted-foreground">Yıllık Deneyim</div>

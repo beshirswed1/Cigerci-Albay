@@ -88,7 +88,7 @@ export default function CartSidebar() {
         <div className="flex items-center justify-between p-5 border-b border-border/30">
           <div className="flex items-center gap-3">
             <ShoppingCart className="w-5 h-5 text-primary" />
-            <h2 className="font-serif text-xl font-bold text-foreground">Sepetim</h2>
+            <h2 className="text-xl font-bold text-foreground">Sepetim</h2>
             <span className="px-2 py-0.5 rounded-lg bg-primary/10 text-primary text-xs font-medium">
               {items.length}
             </span>

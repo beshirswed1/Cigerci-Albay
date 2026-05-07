@@ -178,7 +178,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <Image src={logo} alt={RESTAURANT.name} width={50} height={50} className="w-12 h-12 object-contain" />
-            <span className="font-serif text-xl font-bold text-foreground tracking-wide">
+            <span className="text-xl font-bold text-foreground tracking-wide">
               {RESTAURANT.name}
             </span>
           </Link>

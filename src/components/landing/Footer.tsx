@@ -8,6 +8,14 @@ import { Heart, ArrowUp, Settings, LucideCheckCircle2, LucideMoveRight } from "l
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebook, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
+function formatPhone(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 11 && digits.startsWith("0")) {
+    return `(${digits.slice(1, 4)}) ${digits.slice(4, 7)} ${digits.slice(7, 9)} ${digits.slice(9, 11)}`;
+  }
+  return phone;
+}
+
 const socialIcons: Record<string, typeof faInstagram> = {
   instagram: faInstagram,
   facebook: faFacebook,
@@ -27,7 +35,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
               <Image src={logo} alt={RESTAURANT.name} width={50} height={50} className="w-12 h-12 object-contain" />
-              <span className="font-serif text-xl font-bold text-foreground">
+              <span className="text-xl font-bold text-foreground">
                 {RESTAURANT.name}
               </span>
             </div>
@@ -73,7 +81,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li>
                 <a href={`tel:${RESTAURANT.phone.replace(/\s/g, "")}`} className="hover:text-primary transition-colors">
-                  {RESTAURANT.phone}
+                  {formatPhone(RESTAURANT.phone)}
                 </a>
               </li>
               {Boolean((RESTAURANT as any).email) && (

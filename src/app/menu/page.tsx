@@ -61,13 +61,13 @@ export default function MenuPage() {
             </Link>
             <div className="flex items-center gap-2">
               <Image src="/logo.png" alt={RESTAURANT.name} width={40} height={40} className="w-10 h-10 object-contain" />
-              <span className="font-serif text-lg font-bold text-foreground hidden sm:block">
+              <span className="text-lg font-bold text-foreground hidden sm:block">
                 {RESTAURANT.name}
               </span>
             </div>
           </div>
 
-          <h1 className="font-serif text-xl font-bold text-foreground">Menü</h1>
+          <h1 className="text-xl font-bold text-foreground">Menü</h1>
 
           {/* Cart Button - only show when ordering is enabled */}
           {orderingEnabled ? (
@@ -93,7 +93,7 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* ─── Page Title ───────────────────────── */}
         <div className="text-center mb-10">
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-3">
+          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-3">
             Menümüz
           </h2>
           <p className="text-muted-foreground text-base max-w-md mx-auto">

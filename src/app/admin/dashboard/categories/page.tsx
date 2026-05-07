@@ -83,7 +83,7 @@ export default function CategoriesPage() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <FolderOpen className="w-6 h-6 text-primary" />
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
             Kategoriler
           </h1>
         </div>

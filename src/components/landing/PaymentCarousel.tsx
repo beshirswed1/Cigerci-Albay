@@ -2,6 +2,7 @@
 
 import { useReveal } from "@/hooks/useReveal";
 import Image from "next/image";
+import { CreditCard } from "lucide-react";
 
 const paymentMethods = [
   { name: "Edenred", logo: "/edenred.png" },
@@ -23,9 +24,7 @@ export default function PaymentCarousel() {
   ];
 
   return (
-    <section className="py-16 sm:py-20 relative overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 section-divider" />
-
+    <section className="py-12 sm:py-16 relative overflow-hidden">
       {/* Subtle background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -34,13 +33,14 @@ export default function PaymentCarousel() {
         className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal ${isVisible ? "visible" : ""}`}
       >
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-14">
-
-
+        <div className="text-center mb-8 sm:mb-10">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+            <CreditCard className="w-4 h-4" />
+            Ödeme Yöntemleri
+          </span>
           <p className="text-muted-foreground text-sm sm:text-base max-w-lg mx-auto">
             Yemek kartlarınızla kolayca ödeme yapabilirsiniz
           </p>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full mt-5" />
         </div>
 
         {/* Carousel Container */}
@@ -67,7 +67,7 @@ export default function PaymentCarousel() {
                       draggable={false}
                     />
                   </div>
-                  <p className="text-center text-xs sm:text-sm text-muted-foreground mt-3 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <p className="text-center text-xs sm:text-sm text-muted-foreground mt-2 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     {method.name}
                   </p>
                 </div>

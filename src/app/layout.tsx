@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
-import { Outfit, Great_Vibes } from "next/font/google";
 import { Toaster } from "sonner";
 import ReduxProvider from "@/components/providers/ReduxProvider";
 import { RESTAURANT } from "@/constants/restaurant-data";
+import { Lora } from "next/font/google";
 import "./globals.css";
 
-const outfit = Outfit({
+const lora = Lora({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-outfit",
-  display: "swap",
-});
-
-const greatVibes = Great_Vibes({
-  weight: "400",
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-great-vibes",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -47,10 +41,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" className={`${outfit.variable} ${greatVibes.variable}`}>
+    <html lang="tr">
       <head>
       </head>
-      <body className={`${outfit.className} font-sans`}>
+      <body className={`${lora.variable} font-serif`}>
         <ReduxProvider>
           {children}
         </ReduxProvider>

@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
             <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
               <ChefHat className="w-8 h-8" />
             </div>
-            <h1 className="font-serif text-2xl font-bold text-foreground mb-1">
+            <h1 className="text-2xl font-bold text-foreground mb-1">
               {RESTAURANT.name}
             </h1>
             <p className="text-sm text-muted-foreground">Yönetim Paneli</p>

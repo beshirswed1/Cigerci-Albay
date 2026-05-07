@@ -22,11 +22,19 @@ const socialColors: Record<string, string> = {
   twitter: "from-sky-400 to-sky-600",
 };
 
+function formatPhone(phone: string): string {
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 11 && digits.startsWith("0")) {
+    return `(${digits.slice(1, 4)}) ${digits.slice(4, 7)} ${digits.slice(7, 9)} ${digits.slice(9, 11)}`;
+  }
+  return phone;
+}
+
 export default function ContactSection() {
   const { ref, isVisible } = useReveal();
 
   return (
-    <section id="contact" className="py-20 sm:py-28 lg:py-32 relative overflow-hidden">
+    <section id="contact" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
       {/* Background decoration */}
@@ -37,11 +45,11 @@ export default function ContactSection() {
         className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal ${isVisible ? "visible" : ""}`}
       >
         {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-10 sm:mb-14">
           <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             Bize Ulaşın
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
             İletişim
           </h2>
           <p className="text-muted-foreground text-sm sm:text-base max-w-lg mx-auto">
@@ -62,7 +70,7 @@ export default function ContactSection() {
               <Phone className="w-6 h-6" />
             </div>
             <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider font-medium">Telefon</p>
-            <p className="text-xl font-bold text-primary tracking-wide">{RESTAURANT.phone}</p>
+            <p className="text-xl font-bold text-primary tracking-wide">{formatPhone(RESTAURANT.phone)}</p>
             <div className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground group-hover:text-primary transition-colors">
               <span>Hemen Ara</span>
               <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />

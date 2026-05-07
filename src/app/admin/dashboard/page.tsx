@@ -98,7 +98,7 @@ export default function AdminDashboard() {
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
           <TrendingUp className="w-6 h-6 text-primary" />
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
             Genel Bakış
           </h1>
         </div>
@@ -169,7 +169,7 @@ export default function AdminDashboard() {
             <div className={`w-12 h-12 rounded-xl ${card.bg} flex items-center justify-center ${card.color} mb-4`}>
               <card.icon className="w-6 h-6" />
             </div>
-            <div className="text-3xl font-bold text-foreground font-serif mb-1">
+            <div className="text-3xl font-bold text-foreground mb-1">
               {card.value}
             </div>
             <div className="text-sm text-muted-foreground">{card.label}</div>
