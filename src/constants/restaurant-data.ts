@@ -17,6 +17,7 @@ export const RESTAURANT = {
 
   // ─── Contact ─────────────────────────────────────
   phone: "03422201263", //
+  whatsapp: "905352886804", // +90 535 288 68 04
   // email: "",
   address: "Yaprak, 27400 Şehitkamil/Gaziantep", //
   city: "Gaziantep",

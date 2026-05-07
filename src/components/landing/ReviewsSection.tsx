@@ -84,7 +84,7 @@ export default function ReviewsSection() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border/50 text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-all duration-300 hover:-translate-y-0.5"
           >
             <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-            Tüm Google Yorumlarını Gör
+            Tüm Google yorumları Gör
           </a>
         </div>
       </div>

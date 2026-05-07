@@ -7,7 +7,6 @@ import ContactSection from "@/components/landing/ContactSection";
 import PaymentCarousel from "@/components/landing/PaymentCarousel";
 import MapSection from "@/components/landing/MapSection";
 import Footer from "@/components/landing/Footer";
-import FloatingCallButton from "@/components/landing/FloatingCallButton";
 
 export default function HomePage() {
   return (
@@ -23,7 +22,6 @@ export default function HomePage() {
         <MapSection />
       </main>
       <Footer />
-      <FloatingCallButton />
     </>
   );
 }
