@@ -4,8 +4,12 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { RESTAURANT } from "@/constants/restaurant-data";
-import { Menu, X, Share2, Globe, Check } from "lucide-react";
+import { Share2, Globe, Check, ShoppingCart, UtensilsCrossed, Home } from "lucide-react";
 import logo from "../../../public/logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartItemCount, toggleCart } from "@/store/cartSlice";
+import { subscribeToSettings } from "@/lib/firestore";
+import { usePathname } from "next/navigation";
 
 const LANGUAGES = [
   { code: "tr", label: "Türkçe", flag: "🇹🇷" },
@@ -21,14 +25,20 @@ const LANGUAGES = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState("tr");
   const langRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
+  const cartItemCount = useSelector(selectCartItemCount);
+  const [orderingEnabled, setOrderingEnabled] = useState(true);
 
   // Load Google Translate script (hidden)
   useEffect(() => {
+    const unsub = subscribeToSettings((settings) => {
+      setOrderingEnabled(settings.orderingEnabled);
+    });
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
 
@@ -75,6 +85,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("hashchange", removeHash);
+      unsub();
     };
   }, []);
 
@@ -137,14 +148,13 @@ export default function Navbar() {
   const currentLangData = LANGUAGES.find((l) => l.code === currentLang) || LANGUAGES[0];
 
   // Language dropdown component (reused in desktop & mobile)
-  const LanguageDropdown = ({ isMobile = false }: { isMobile?: boolean }) => (
-    <div className={`${isMobile ? "" : "py-1"} space-y-0.5`}>
+  const LanguageDropdown = () => (
+    <div className="py-1 space-y-0.5">
       {LANGUAGES.map((lang) => (
         <button
           key={lang.code}
           onClick={() => {
             selectLanguage(lang.code);
-            if (isMobile) setIsMobileOpen(false);
           }}
           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 ${
             currentLang === lang.code
@@ -183,29 +193,35 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center gap-1">
-            {RESTAURANT.theme.navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-primary rounded-lg hover:bg-primary/5 transition-all duration-300"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          {/* Nav Links & Actions */}
+          <div className="flex items-center gap-1 sm:gap-2">
+            
+            {/* Desktop Nav Links */}
+            <div className="hidden lg:flex items-center gap-1 mr-2 border-r border-border/30 pr-4">
+              {RESTAURANT.theme.navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 flex items-center gap-2 ${
+                    pathname === link.href 
+                      ? "bg-primary/10 text-primary" 
+                      : "text-foreground/70 hover:text-primary hover:bg-primary/5"
+                  }`}
+                >
+                  {link.href === "/" ? <Home className="w-4 h-4" /> : <UtensilsCrossed className="w-4 h-4" />}
+                  {link.label}
+                </Link>
+              ))}
+            </div>
 
-          {/* Right Actions */}
-          <div className="hidden lg:flex items-center gap-2">
             {/* Custom Language Selector */}
             <div className="relative" ref={langRef}>
               <button
                 onClick={() => setIsLangOpen(!isLangOpen)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all"
+                className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-2 rounded-xl sm:rounded-lg text-sm text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all"
               >
-                <Globe className="w-4 h-4" />
-                <span className="text-base leading-none">{currentLangData.flag}</span>
+                <Globe className="w-5 h-5 sm:w-4 sm:h-4" />
+                <span className="text-lg sm:text-base leading-none">{currentLangData.flag}</span>
               </button>
 
               <div
@@ -220,76 +236,45 @@ export default function Navbar() {
             {/* Share */}
             <button
               onClick={handleShare}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all"
+              className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl sm:rounded-lg text-sm text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all"
               title="Paylaş"
             >
-              <Share2 className="w-4 h-4" />
+              <Share2 className="w-5 h-5 sm:w-4 sm:h-4" />
             </button>
 
-            {/* Menu CTA */}
-            <Link
-              href="/menu"
-              className="ml-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
-            >
-              Menü
-            </Link>
-          </div>
-
-          {/* Mobile Hamburger */}
-          <button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="lg:hidden p-2 rounded-lg text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all"
-          >
-            {isMobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Nav */}
-        <div
-          className={`lg:hidden glass-strong mt-2 mx-4 rounded-2xl shadow-2xl shadow-black/40 overflow-hidden transition-all duration-300 origin-top transform ${
-            isMobileOpen ? "opacity-100 scale-100 visible max-h-[600px]" : "opacity-0 scale-95 invisible max-h-0"
-          }`}
-        >
-          <div className="p-4 space-y-1">
-            {RESTAURANT.theme.navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMobileOpen(false)}
-                className="block px-4 py-3 rounded-xl text-foreground/80 hover:text-primary hover:bg-primary/5 transition-all text-sm font-medium"
+            {/* Cart Button */}
+            {orderingEnabled && (
+              <button
+                onClick={() => dispatch(toggleCart())}
+                className="relative p-2 sm:px-3 sm:py-2 rounded-xl sm:rounded-lg text-foreground/70 hover:text-primary hover:bg-primary/5 transition-all"
               >
-                {link.label}
+                <ShoppingCart className="w-5 h-5 sm:w-4 sm:h-4" />
+                {cartItemCount > 0 && (
+                  <span className="absolute top-0 right-0 sm:-top-1 sm:-right-1 w-4 h-4 sm:w-5 sm:h-5 bg-primary text-primary-foreground text-[10px] sm:text-xs font-bold rounded-full flex items-center justify-center animate-scale-in">
+                    {cartItemCount}
+                  </span>
+                )}
+              </button>
+            )}
+
+            {/* Mobile Menu CTA Icon */}
+            <Link
+              href={pathname === "/menu" ? "/" : "/menu"}
+              className="lg:hidden flex items-center justify-center ml-1 p-2 bg-primary/10 text-primary rounded-xl hover:bg-primary hover:text-primary-foreground transition-all"
+            >
+              {pathname === "/menu" ? <Home className="w-5 h-5" /> : <UtensilsCrossed className="w-5 h-5" />}
+            </Link>
+
+            {/* Desktop Menu CTA */}
+            {pathname !== "/menu" && (
+              <Link
+                href="/menu"
+                className="hidden lg:flex ml-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 items-center gap-2"
+              >
+                <UtensilsCrossed className="w-4 h-4" />
+                Menü
               </Link>
-            ))}
-
-            {/* Mobile Language Selector */}
-            <div className="pt-3 border-t border-border/50 mt-3 space-y-2">
-              <p className="px-4 text-xs text-muted-foreground font-medium uppercase tracking-wider">
-                Dil Seçin
-              </p>
-              <div className="px-2 max-h-48 overflow-y-auto scrollbar-hide">
-                <LanguageDropdown isMobile />
-              </div>
-            </div>
-
-            <div className="pt-3 border-t border-border/50 mt-3">
-              <div className="flex gap-2 px-4">
-                <button
-                  onClick={handleShare}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm text-foreground/70 border border-border hover:border-primary/30 hover:text-primary transition-all"
-                >
-                  <Share2 className="w-4 h-4" />
-                  Paylaş
-                </button>
-                <Link
-                  href="/menu"
-                  onClick={() => setIsMobileOpen(false)}
-                  className="flex-1 flex items-center justify-center px-4 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-all"
-                >
-                  Menü
-                </Link>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </nav>

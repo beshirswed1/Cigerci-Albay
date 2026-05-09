@@ -12,6 +12,7 @@ import {
   FolderOpen,
   Package,
   ClipboardList,
+  Image as ImageIcon,
   LogOut,
   ChefHat,
   Menu,
@@ -24,6 +25,7 @@ const allNavItems = [
   { label: "Kategoriler", href: "/admin/dashboard/categories", icon: FolderOpen, alwaysVisible: true },
   { label: "Ürünler", href: "/admin/dashboard/products", icon: Package, alwaysVisible: true },
   { label: "Siparişler", href: "/admin/dashboard/orders", icon: ClipboardList, alwaysVisible: false },
+  { label: "Galeri", href: "/admin/dashboard/gallery", icon: ImageIcon, alwaysVisible: true },
 ];
 
 export default function AdminDashboardLayout({

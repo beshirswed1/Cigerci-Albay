@@ -58,6 +58,12 @@ export interface RestaurantSettings {
   orderingEnabled: boolean;
 }
 
+export interface GalleryItem {
+  id: string;
+  imageUrl: string;
+  createdAt?: string;
+}
+
 // ─── Categories ────────────────────────────────────
 const categoriesRef = collection(db, "categories");
 
@@ -203,4 +209,42 @@ export function subscribeToSettings(callback: (settings: RestaurantSettings) => 
       callback({ orderingEnabled: true });
     }
   );
+}
+
+// ─── Gallery ───────────────────────────────────────
+const galleryRef = collection(db, "gallery");
+
+export async function addGalleryImage(imageUrl: string): Promise<string> {
+  const docRef = await addDoc(galleryRef, {
+    imageUrl,
+    createdAt: serverTimestamp(),
+  });
+  return docRef.id;
+}
+
+export async function deleteGalleryImage(id: string): Promise<void> {
+  const ref = doc(db, "gallery", id);
+  await deleteDoc(ref);
+}
+
+export function subscribeToGallery(callback: (items: GalleryItem[]) => void) {
+  return onSnapshot(galleryRef, (snap) => {
+    const items = snap.docs.map((d) => {
+      const data = d.data();
+      return {
+        id: d.id,
+        ...data,
+        createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toDate().toISOString() : data.createdAt,
+      } as GalleryItem;
+    });
+    
+    // Client-side sort to avoid index requirement
+    items.sort((a, b) => {
+      const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return dateB - dateA;
+    });
+    
+    callback(items);
+  });
 }

@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { RESTAURANT } from "@/constants/restaurant-data";
 import CartSidebar from "@/components/menu/CartSidebar";
+import Navbar from "@/components/landing/Navbar";
 import {
   ArrowLeft,
   Search,
@@ -49,48 +50,9 @@ export default function MenuPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* ─── Navbar ───────────────────────────────── */}
-      <nav className="sticky top-0 z-40 glass-strong border-b border-border/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link
-              href="/"
-              className="p-2 rounded-xl text-foreground/60 hover:text-primary hover:bg-primary/5 transition-all"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Link>
-            <div className="flex items-center gap-2">
-              <Image src="/logo.png" alt={RESTAURANT.name} width={40} height={40} className="w-10 h-10 object-contain" />
-              <span className="text-lg font-bold text-foreground hidden sm:block">
-                {RESTAURANT.name}
-              </span>
-            </div>
-          </div>
+      <Navbar />
 
-          <h1 className="text-xl font-bold text-foreground">Menü</h1>
-
-          {/* Cart Button - only show when ordering is enabled */}
-          {orderingEnabled ? (
-            <button
-              onClick={() => dispatch(toggleCart())}
-              className="relative p-2.5 rounded-xl text-foreground/60 hover:text-primary hover:bg-primary/5 transition-all"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              {cartItemCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs font-bold rounded-full flex items-center justify-center animate-scale-in">
-                  {cartItemCount}
-                </span>
-              )}
-            </button>
-          ) : (
-            <div className="w-10" />
-          )}
-        </div>
-      </nav>
-
-
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-24 lg:pt-32">
         {/* ─── Page Title ───────────────────────── */}
         <div className="text-center mb-10">
           <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-3">
@@ -123,12 +85,12 @@ export default function MenuPage() {
         </div>
 
         {/* ─── Category Tabs ─────────────────────── */}
-        <div className="flex gap-2.5 overflow-x-auto scrollbar-hide pb-4 mb-10 justify-start sm:justify-center">
+        <div className="flex flex-wrap gap-2 sm:gap-3 pb-2 mb-8 justify-center">
           <button
             onClick={() => dispatch(setSelectedCategory(null))}
-            className={`flex-shrink-0 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 ${!selectedCategory
-              ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-              : "bg-card/60 text-foreground/60 border border-border/50 hover:border-primary/30 hover:text-primary hover:bg-primary/5"
+            className={`px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl text-sm font-semibold transition-all duration-300 flex-grow-0 ${!selectedCategory
+              ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105"
+              : "bg-card/60 text-foreground/60 border border-border/50 hover:border-primary/30 hover:text-primary hover:bg-primary/5 hover:scale-105"
               }`}
           >
             Tümü
@@ -137,9 +99,9 @@ export default function MenuPage() {
             <button
               key={cat.id}
               onClick={() => dispatch(setSelectedCategory(cat.id))}
-              className={`flex-shrink-0 px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300 ${selectedCategory === cat.id
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-                : "bg-card/60 text-foreground/60 border border-border/50 hover:border-primary/30 hover:text-primary hover:bg-primary/5"
+              className={`px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl sm:rounded-2xl text-sm font-semibold transition-all duration-300 flex-grow-0 ${selectedCategory === cat.id
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25 scale-105"
+                : "bg-card/60 text-foreground/60 border border-border/50 hover:border-primary/30 hover:text-primary hover:bg-primary/5 hover:scale-105"
                 }`}
             >
               {cat.name}
@@ -178,7 +140,7 @@ export default function MenuPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
             {filteredItems.map((item) => (
               <div
                 key={item.id}
@@ -191,7 +153,7 @@ export default function MenuPage() {
                       src={item.imageUrl}
                       alt={item.name}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                   ) : (
@@ -208,16 +170,16 @@ export default function MenuPage() {
                 </div>
 
                 {/* Content */}
-                <div className="p-5">
-                  <h3 className="font-bold text-foreground text-base mb-1.5 line-clamp-1">{item.name}</h3>
+                <div className="p-3 sm:p-5">
+                  <h3 className="font-bold text-foreground text-sm sm:text-base mb-1 line-clamp-1">{item.name}</h3>
                   {item.description && (
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 line-clamp-2 leading-relaxed">
                       {item.description}
                     </p>
                   )}
 
                   <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold gradient-text">
+                    <span className="text-base sm:text-xl font-bold gradient-text">
                       ₺{item.price.toFixed(2)}
                     </span>
                     {orderingEnabled && (
@@ -230,7 +192,7 @@ export default function MenuPage() {
                             imageUrl: item.imageUrl,
                           })
                         }
-                        className="flex items-center gap-1.5 px-4 py-2.5 bg-primary/10 text-primary rounded-xl text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn"
+                        className="flex items-center gap-1 px-2.5 py-1.5 sm:px-4 sm:py-2.5 bg-primary/10 text-primary rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn"
                       >
                         <Plus className="w-4 h-4" />
                         <span>Ekle</span>
