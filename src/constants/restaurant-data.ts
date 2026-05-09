@@ -31,7 +31,7 @@ export const RESTAURANT = {
   // ─── Working Hours ───────────────────────────────
   workingHours: [
     { days: "Pazartesi - Cumartesi", hours: "09:00 - 03:00" }, //
-    { days: "Pazar", hours: "09:00 - 12:00" } //
+    { days: "Pazar", hours: "09:00 - 03:00" } //
   ],
 
   // ─── Hero Section ────────────────────────────────
