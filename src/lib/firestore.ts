@@ -68,9 +68,9 @@ export interface GalleryItem {
 const categoriesRef = collection(db, "categories");
 
 export async function getCategories(): Promise<Category[]> {
-  const q = query(categoriesRef, orderBy("order", "asc"));
+  const q = query(categoriesRef);
   const snap = await getDocs(q);
-  return snap.docs.map((d) => {
+  const items = snap.docs.map((d) => {
     const data = d.data();
     return {
       id: d.id,
@@ -78,6 +78,8 @@ export async function getCategories(): Promise<Category[]> {
       createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toDate().toISOString() : data.createdAt,
     } as Category;
   });
+  
+  return items.sort((a, b) => a.name.localeCompare(b.name, "tr-TR"));
 }
 
 export async function addCategory(name: string, order: number = 0): Promise<string> {
@@ -103,9 +105,9 @@ export async function deleteCategory(id: string): Promise<void> {
 const menuItemsRef = collection(db, "menuItems");
 
 export async function getMenuItems(): Promise<MenuItem[]> {
-  const q = query(menuItemsRef, orderBy("createdAt", "desc"));
+  const q = query(menuItemsRef);
   const snap = await getDocs(q);
-  return snap.docs.map((d) => {
+  const items = snap.docs.map((d) => {
     const data = d.data();
     return {
       id: d.id,
@@ -113,6 +115,8 @@ export async function getMenuItems(): Promise<MenuItem[]> {
       createdAt: data.createdAt instanceof Timestamp ? data.createdAt.toDate().toISOString() : data.createdAt,
     } as MenuItem;
   });
+  
+  return items.sort((a, b) => a.name.localeCompare(b.name, "tr-TR"));
 }
 
 export async function addMenuItem(item: Omit<MenuItem, "id" | "createdAt">): Promise<string> {
