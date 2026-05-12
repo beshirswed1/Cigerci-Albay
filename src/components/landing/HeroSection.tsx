@@ -28,8 +28,8 @@ export default function HeroSection() {
         }
       `}</style>
 
-      {/* Dark Overlay — stronger for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-background" />
+      {/* Light Overlay — for readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/60 to-background" />
 
       {/* Subtle pattern overlay */}
       <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }} />
@@ -47,7 +47,7 @@ export default function HeroSection() {
         </div>
 
         {/* Title */}
-        <h1 className="animate-fade-in-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] mb-6 tracking-tight drop-shadow-2xl">
+        <h1 className="animate-fade-in-up text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground leading-[1.1] mb-6 tracking-tight drop-shadow-2xl">
           {RESTAURANT.hero.title.split(" ").map((word, i) => (
             <span
               key={i}
@@ -59,7 +59,7 @@ export default function HeroSection() {
         </h1>
 
         {/* Subtitle */}
-        <p className="animate-fade-in-up delay-200 text-lg sm:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-lg">
+        <p className="animate-fade-in-up delay-200 text-lg sm:text-xl text-foreground/80 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-lg">
           {RESTAURANT.hero.subtitle}
         </p>
 
@@ -74,7 +74,7 @@ export default function HeroSection() {
           </Link>
           <Link
             href={RESTAURANT.hero.ctaSecondary.href}
-            className="group flex items-center gap-2 px-8 py-4 rounded-2xl text-lg font-semibold text-white border border-white/20 hover:border-primary/40 hover:bg-primary/10 backdrop-blur-sm transition-all duration-300"
+            className="group flex items-center gap-2 px-8 py-4 rounded-2xl text-lg font-semibold text-foreground border border-foreground/20 hover:border-primary/40 hover:bg-primary/5 backdrop-blur-sm transition-all duration-300"
           >
             <Phone className="w-5 h-5 group-hover:animate-wiggle" />
             {RESTAURANT.hero.ctaSecondary.text}
@@ -85,8 +85,8 @@ export default function HeroSection() {
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-gentle">
         <div className="flex flex-col items-center gap-2">
-          <span className="text-xs text-white/40 tracking-widest uppercase">Kaydır</span>
-          <ChevronDown className="w-6 h-6 text-white/40" />
+          <span className="text-xs text-foreground/50 tracking-widest uppercase">Kaydır</span>
+          <ChevronDown className="w-6 h-6 text-foreground/50" />
         </div>
       </div>
 

@@ -140,68 +140,101 @@ export default function MenuPage() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-            {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                className="group rounded-3xl bg-card/50 border border-border/50 hover:border-primary/20 overflow-hidden transition-all duration-500 card-hover"
-              >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-secondary/30">
-                  {item.imageUrl ? (
-                    <Image
-                      src={item.imageUrl}
-                      alt={item.name}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <UtensilsCrossed className="w-12 h-12 text-muted-foreground/20" />
+          <div className="space-y-12 sm:space-y-16">
+            {(() => {
+              const groups = !selectedCategory 
+                ? categories.map((cat: { id: string; name: string }) => ({
+                    id: cat.id,
+                    name: cat.name,
+                    items: filteredItems.filter((item) => item.category === cat.name)
+                  })).filter((g: { items: any[] }) => g.items.length > 0)
+                : [{
+                    id: selectedCategory,
+                    name: categories.find((c: { id: string; name: string }) => c.id === selectedCategory)?.name || "",
+                    items: filteredItems
+                  }];
+
+              return groups.map((group) => (
+                <div key={group.id} className="space-y-4 sm:space-y-6">
+                  {!selectedCategory && (
+                    <div className="flex items-center gap-4 px-2">
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">{group.name}</h3>
+                      <div className="flex-1 h-px bg-gradient-to-r from-border/80 to-transparent"></div>
                     </div>
                   )}
-                  {/* Category Badge */}
-                  <div className="absolute top-3 left-3">
-                    <span className="px-3 py-1.5 rounded-xl glass text-xs font-semibold text-foreground/90">
-                      {item.category}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-3 sm:p-5">
-                  <h3 className="font-bold text-foreground text-sm sm:text-base mb-1 line-clamp-1">{item.name}</h3>
-                  {item.description && (
-                    <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 line-clamp-2 leading-relaxed">
-                      {item.description}
-                    </p>
-                  )}
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-base sm:text-xl font-bold gradient-text">
-                      ₺{item.price.toFixed(2)}
-                    </span>
-                    {orderingEnabled && (
-                      <button
-                        onClick={() =>
-                          handleAddToCart({
-                            id: item.id,
-                            name: item.name,
-                            price: item.price,
-                            imageUrl: item.imageUrl,
-                          })
-                        }
-                        className="flex items-center gap-1 px-2.5 py-1.5 sm:px-4 sm:py-2.5 bg-primary/10 text-primary rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn"
+                  <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+                    {group.items.map((item) => (
+                      <div
+                        key={item.id}
+                        className="group rounded-3xl bg-card/50 border border-border/50 hover:border-primary/20 overflow-hidden transition-all duration-500 card-hover flex flex-col"
                       >
-                        <Plus className="w-4 h-4" />
-                        <span>Ekle</span>
-                      </button>
-                    )}
+                        {/* Image */}
+                        <div className="relative aspect-[4/3] overflow-hidden bg-secondary/30 shrink-0">
+                          {item.imageUrl ? (
+                            <Image
+                              src={item.imageUrl}
+                              alt={item.name}
+                              fill
+                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                              className="object-cover group-hover:scale-110 transition-transform duration-700"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 bg-white/50 flex items-center justify-center p-4">
+                              <Image
+                                src="/favicon.ico"
+                                alt={item.name}
+                                fill
+                                className="object-contain opacity-50 group-hover:scale-110 transition-transform duration-700 p-8"
+                              />
+                            </div>
+                          )}
+                          {/* Category Badge */}
+                          {selectedCategory && (
+                            <div className="absolute top-3 left-3">
+                              <span className="px-3 py-1.5 rounded-xl glass text-xs font-semibold text-foreground/90">
+                                {item.category}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-3 sm:p-5 flex flex-col flex-1">
+                          <h3 className="font-bold text-foreground text-sm sm:text-base mb-1 line-clamp-1">{item.name}</h3>
+                          {item.description && (
+                            <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4 line-clamp-2 leading-relaxed">
+                              {item.description}
+                            </p>
+                          )}
+
+                          <div className="mt-auto flex items-center justify-between pt-2">
+                            <span className="text-base sm:text-xl font-bold gradient-text">
+                              ₺{item.price.toFixed(2)}
+                            </span>
+                            {orderingEnabled && (
+                              <button
+                                onClick={() =>
+                                  handleAddToCart({
+                                    id: item.id,
+                                    name: item.name,
+                                    price: item.price,
+                                    imageUrl: item.imageUrl,
+                                  })
+                                }
+                                className="flex items-center gap-1 px-2.5 py-1.5 sm:px-4 sm:py-2.5 bg-primary/10 text-primary rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300 group/btn shrink-0"
+                              >
+                                <Plus className="w-4 h-4" />
+                                <span>Ekle</span>
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </div>
-            ))}
+              ));
+            })()}
           </div>
         )}
       </div>

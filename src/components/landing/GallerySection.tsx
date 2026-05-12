@@ -31,24 +31,24 @@ export default function GallerySection() {
   }
 
   return (
-    <section className="py-24 sm:py-32 relative overflow-hidden bg-[#0A0A0A]" id="gallery">
+    <section className="py-24 sm:py-32 relative overflow-hidden bg-background" id="gallery">
       {/* Ultra Premium Background Gradients */}
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-50" />
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[150px] pointer-events-none animate-pulse duration-[10000ms]" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/10 rounded-full blur-[150px] pointer-events-none animate-pulse duration-[10000ms] delay-1000" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(10,10,10,1)_80%)] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,var(--background)_0%,var(--background)_80%)] pointer-events-none" />
 
       <div className="container px-4 sm:px-6 lg:px-8 mx-auto relative z-10 max-w-7xl">
         {/* Header Section */}
         <div className="text-center max-w-3xl mx-auto mb-20 flex flex-col items-center">
-          <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-primary mb-6 shadow-[0_0_30px_rgba(var(--primary),0.1)]">
+          <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border/50 backdrop-blur-md text-primary mb-6 shadow-sm">
             <Camera className="w-4 h-4" />
             <span className="text-sm font-medium tracking-wide uppercase">Görsel Şölen</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-white drop-shadow-md">
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground drop-shadow-sm">
             Göz Alıcı <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Anlar</span>
           </h2>
-          <p className="text-lg text-white/60 font-light leading-relaxed max-w-2xl">
+          <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-2xl">
             Taptaze malzemeler, ustalıkla hazırlanan lezzetler ve restoranımızın eşsiz atmosferinden kareler.
           </p>
         </div>
@@ -74,10 +74,10 @@ export default function GallerySection() {
             return (
               <div
                 key={item.id}
-                className={`group relative p-1 sm:p-1.5 rounded-[1.5rem] sm:rounded-[2rem] bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/40 hover:bg-white/10 cursor-pointer transition-all duration-700 ease-out hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(var(--primary),0.2)] ${spanClass}`}
+                className={`group relative p-1 sm:p-1.5 rounded-[1.5rem] sm:rounded-[2rem] bg-card/50 backdrop-blur-sm border border-border/50 hover:border-primary/40 hover:bg-card cursor-pointer transition-all duration-700 ease-out hover:-translate-y-1 sm:hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(var(--primary),0.2)] ${spanClass}`}
                 onClick={() => setSelectedImage(item.imageUrl)}
               >
-                <div className="relative w-full h-full rounded-[1.2rem] sm:rounded-[1.5rem] overflow-hidden bg-[#1A1A1A]">
+                <div className="relative w-full h-full rounded-[1.2rem] sm:rounded-[1.5rem] overflow-hidden bg-secondary/10">
                   <Image
                     src={item.imageUrl}
                     alt={`Gallery Image ${index + 1}`}
@@ -87,8 +87,8 @@ export default function GallerySection() {
                   />
                   
                   {/* Elegant Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-[#0A0A0A]/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                    <div className="translate-y-8 group-hover:translate-y-0 transition-all duration-500 ease-out flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-xl">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                    <div className="translate-y-8 group-hover:translate-y-0 transition-all duration-500 ease-out flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-background/80 backdrop-blur-md border border-border text-foreground shadow-xl">
                       <span className="text-xs sm:text-sm font-medium tracking-wide">Büyüt</span>
                     </div>
                   </div>
@@ -102,11 +102,11 @@ export default function GallerySection() {
       {/* Modern Lightbox */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0A]/90 backdrop-blur-xl p-4 sm:p-8 animate-in fade-in duration-300"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-xl p-4 sm:p-8 animate-in fade-in duration-300"
           onClick={() => setSelectedImage(null)}
         >
           <button 
-            className="absolute top-6 right-6 p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/20 hover:scale-110 transition-all duration-300 z-50 group"
+            className="absolute top-6 right-6 p-3 rounded-full bg-card border border-border/50 text-foreground/70 hover:text-foreground hover:bg-card/80 hover:scale-110 transition-all duration-300 z-50 group shadow-lg"
             onClick={(e) => {
               e.stopPropagation();
               setSelectedImage(null);
