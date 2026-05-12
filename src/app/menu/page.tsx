@@ -48,6 +48,20 @@ export default function MenuPage() {
     dispatch(addToCart(item));
   };
 
+  const sortedCategories = [...categories].sort((a: { name: string }, b: { name: string }) => {
+    const order = ["D", "P", "Ç", "İ"];
+    const aChar = a.name.charAt(0).toLocaleUpperCase("tr-TR");
+    const bChar = b.name.charAt(0).toLocaleUpperCase("tr-TR");
+    const aIndex = order.indexOf(aChar);
+    const bIndex = order.indexOf(bChar);
+
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex !== -1) return -1;
+    if (bIndex !== -1) return 1;
+
+    return a.name.localeCompare(b.name, "tr-TR");
+  });
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -95,7 +109,7 @@ export default function MenuPage() {
           >
             Tümü
           </button>
-          {categories.map((cat: { id: string; name: string }) => (
+          {sortedCategories.map((cat: { id: string; name: string }) => (
             <button
               key={cat.id}
               onClick={() => dispatch(setSelectedCategory(cat.id))}
@@ -114,8 +128,8 @@ export default function MenuPage() {
           <div className="mb-6">
             <p className="text-sm text-muted-foreground">
               <span className="text-primary font-semibold">{filteredItems.length}</span> ürün bulundu
-              {selectedCategory && categories.length > 0 && (
-                <span> — {categories.find((c: { id: string; name: string }) => c.id === selectedCategory)?.name}</span>
+              {selectedCategory && sortedCategories.length > 0 && (
+                <span> — {sortedCategories.find((c: { id: string; name: string }) => c.id === selectedCategory)?.name}</span>
               )}
             </p>
           </div>
@@ -143,14 +157,14 @@ export default function MenuPage() {
           <div className="space-y-12 sm:space-y-16">
             {(() => {
               const groups = !selectedCategory 
-                ? categories.map((cat: { id: string; name: string }) => ({
+                ? sortedCategories.map((cat: { id: string; name: string }) => ({
                     id: cat.id,
                     name: cat.name,
                     items: filteredItems.filter((item) => item.category === cat.name)
                   })).filter((g: { items: any[] }) => g.items.length > 0)
                 : [{
                     id: selectedCategory,
-                    name: categories.find((c: { id: string; name: string }) => c.id === selectedCategory)?.name || "",
+                    name: sortedCategories.find((c: { id: string; name: string }) => c.id === selectedCategory)?.name || "",
                     items: filteredItems
                   }];
 
